@@ -1,0 +1,20 @@
+{
+  "name": "quizws",
+  "version": "1.0.0",
+  "description": "Node.js quiz Web Socket system",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "debug": "nodemon --trace-warnings --inspect=0.0.0.0:9229 ./index.js",
+    "start": "node ./index.js"
+  },
+  "author": "Craig Buckler",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.7.3",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

@@ -1,0 +1,105 @@
+version: '3'
+
+services:
+
+  # Traefik reverse proxy and load balancer (1 instance)
+  reverse-proxy:
+    image: traefik:v2.6
+    command: --api.insecure=true --providers.docker
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # PostgreSQL server (1 instance)
+  postgres:
+    image: postgres:14
+    container_name: dbserver
+    restart: on-failure
+    env_file: .env
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - postgresdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  # Node HTTP web server (2 instances)
+  web:
+    build:
+      context: ./web
+      dockerfile: web.Dockerfile
+    labels:
+      - traefik.http.routers.web-router.rule=Host(`quiz.localhost`)
+      - traefik.http.routers.web-router.service=web-service
+      - traefik.http.services.web-service.loadbalancer.server.port=8000
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    depends_on:
+      - postgres
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./web:/home/node/app
+      - ./libshared:/home/node/app/libshared
+      - webfiles:/home/node/app/.config
+      - webfiles:/home/node/app/.npm
+      - webfiles:/home/node/app/node_modules
+    ports:
+      - 8000
+      - 9229
+    command: /bin/sh -c 'npm i && npm run debug'
+
+  # Node.js Web Socket server (3 instances)
+  ws:
+    build:
+      context: ./ws
+      dockerfile: ws.Dockerfile
+    labels:
+      - traefik.http.routers.ws-router.rule=Host(`quizws.localhost`)
+      - traefik.http.routers.ws-router.service=ws-service
+      - traefik.http.services.ws-service.loadbalancer.server.port=8001
+    deploy:
+      mode: replicated
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    depends_on:
+      - postgres
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./ws:/home/node/app
+      - ./libshared:/home/node/app/libshared
+      - wsfiles:/home/node/app/.config
+      - wsfiles:/home/node/app/.npm
+      - wsfiles:/home/node/app/node_modules
+    ports:
+      - 8001
+      - 9229
+    command: /bin/sh -c 'npm i && npm run debug'
+
+  # Adminer database client (1 instance)
+  adminer:
+    image: adminer
+    labels:
+      - traefik.http.routers.adminer-router.rule=Host(`adminer.localhost`)
+      - traefik.http.routers.adminer-router.service=adminer-service
+      - traefik.http.services.adminer-service.loadbalancer.server.port=8080
+    depends_on:
+      - postgres
+    restart: on-failure
+    ports:
+      - 8080
+
+volumes:
+  postgresdata:
+  webfiles:
+  wsfiles:

@@ -1,0 +1,23 @@
+{
+  "name": "quizweb",
+  "version": "1.0.0",
+  "description": "Node.js quiz web system",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "debug": "nodemon --trace-warnings --inspect=0.0.0.0:9229 ./index.js",
+    "start": "node ./index.js"
+  },
+  "author": "Craig Buckler",
+  "license": "MIT",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "node-fetch": "^3.2.0",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

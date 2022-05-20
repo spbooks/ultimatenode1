@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= title %></title>
+  <link rel="stylesheet" media="all" href="main.css">
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+
+  <main>
+
+    <h1><%= title %></h1>
+
+    <section id="chat"></section>
+
+    <form id="form" method="get" action="/">
+      <input type="text" id="name" placeholder="your name" title="your name" value="" maxlength="<%= nameLen %>" autocomplete="off" required />
+      <input type="text" id="message" placeholder="your message" title="your message" maxlength="<%= msgLen %>" autocomplete="off" required />
+      <button>SEND</button>
+    </form>
+
+  </main>
+
+  <script type="module">
+    window.cfg = {
+      wsPort: <%= wsPort %>,
+      nameLen: <%= nameLen %>
+    };
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

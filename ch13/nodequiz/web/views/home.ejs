@@ -1,0 +1,99 @@
+<%- include('partials/_htmlhead'); -%>
+
+<header>
+
+  <h1><%= title %></h1>
+
+</header>
+
+<main>
+
+  <% if (imported !== null) { %>
+
+    <p>New questions imported: <%= imported %></p>
+
+  <% } %>
+
+  <p>Quiz has <%= questions %> questions from the <a href="https://opentdb.com/">Open Trivia Database</a>.</p>
+
+  <% if (questions < questionsMax) { %>
+
+    <p><a href="/?import">Import questions&hellip;</a></p>
+
+  <% } %>
+
+  <% if (questions) { %>
+
+    <section class="tabs">
+
+      <article id="new">
+
+        <h2>START A NEW GAME</h2>
+
+        <form action="/newgame/" method="post">
+
+          <div class="formgrid">
+
+            <label for="namenew">your name:</label>
+            <div><input type="text" name="name" id="namenew" value="" minlength="1" maxlength="10" pattern="[A-Za-z0-9]{1,10}" required /></div>
+
+            <label for="questions_asked">number of questions:</label>
+            <div><input type="number" name="questions_asked" id="questions_asked" value="10" min="1" max="50" required /></div>
+
+            <label for="timeout_answered">time limit after first answer:</label>
+            <div><input type="number" name="timeout_answered" id="timeout_answered" value="5" min="5" max="60" required /> seconds</div>
+
+            <label for="score_correct">score for correct answer:</label>
+            <div><input type="number" name="score_correct" id="score_correct" value="1" min="-100" max="100" required /> points</div>
+
+            <label for="score_fastest">bonus for fastest player:</label>
+            <div><input type="number" name="score_fastest" id="score_fastest" value="1" min="-100" max="100" required /> points</div>
+
+            <label for="score_incorrect">score for incorrect answer:</label>
+            <div><input type="number" name="score_incorrect" id="score_incorrect" value="-1" min="-100" max="100" required /> points</div>
+
+            <label for="score_noanswer">score for no answer:</label>
+            <div><input type="number" name="score_noanswer" id="score_noanswer" value="0" min="-100" max="100" required /> points</div>
+          </div>
+
+          <button>ENTER QUIZ LOBBY&hellip;</button>
+
+        </form>
+
+        <p><a href="#join">or JOIN another game&hellip;</a></p>
+
+      </article>
+
+      <article id="join">
+
+        <h2>JOIN AN EXISTING GAME</h2>
+
+        <form action="/joingame/" method="post">
+
+          <div class="formgrid">
+
+            <label for="namejoin">your name:</label>
+            <div><input type="text" name="name" id="namejoin" value="" minlength="1" maxlength="10" pattern="[A-Za-z0-9]{1,10}" required /></div>
+
+            <label for="slug">game code:</label>
+            <div><input type="text" name="slug" id="slug" value="" minlength="3" maxlength="8" autocomplete="off" required /></div>
+
+          </div>
+
+          <button>ENTER QUIZ LOBBY&hellip;</button>
+
+        </form>
+
+        <p><a href="#new">or START a new game&hellip;</a></p>
+
+      </article>
+
+    </section>
+
+  <% } %>
+
+</main>
+
+<script type="module" src="/js/home.js"></script>
+
+<%- include('partials/_htmlfoot'); -%>

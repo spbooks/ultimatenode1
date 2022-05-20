@@ -1,0 +1,12 @@
+.git
+.gitignore
+.config
+.vscode
+.ash_history
+.bash_history
+
+.npm
+node_modules
+libshared
+
+web.Dockerfile

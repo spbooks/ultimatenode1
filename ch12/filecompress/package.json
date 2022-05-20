@@ -1,0 +1,16 @@
+{
+  "name": "filecompress",
+  "version": "1.0.0",
+  "description": "Remove whitespace from a file",
+  "type": "module",
+  "main": "filecompress.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "file",
+    "compress"
+  ],
+  "author": "Craig Buckler",
+  "license": "MIT"
+}

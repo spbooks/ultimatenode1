@@ -1,0 +1,15 @@
+{
+  "name": "worker",
+  "version": "1.0.0",
+  "description": "worker demonstration",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "worker"
+  ],
+  "author": "Craig Buckler",
+  "license": "MIT"
+}

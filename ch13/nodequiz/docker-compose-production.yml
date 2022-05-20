@@ -1,0 +1,69 @@
+version: '3'
+
+services:
+
+  reverse-proxy:
+    image: traefik:v2.6
+    command: --api.insecure=true --providers.docker
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  postgres:
+    image: postgres:14
+    container_name: dbserver
+    restart: on-failure
+    env_file: .env
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - postgresdata:/var/lib/postgresql/data
+    ports:
+      - 5432
+
+  web:
+    build:
+      context: ./web
+      dockerfile: web.Dockerfile
+    labels:
+      - traefik.http.routers.web-router.rule=Host(`quiz.localhost`)
+      - traefik.http.routers.web-router.service=web-service
+      - traefik.http.services.web-service.loadbalancer.server.port=8000
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    depends_on:
+      - postgres
+    env_file: .env
+    volumes:
+      - ./libshared:/home/node/app/libshared
+    ports:
+      - 8000
+
+  ws:
+    build:
+      context: ./ws
+      dockerfile: ws.Dockerfile
+    labels:
+      - traefik.http.routers.ws-router.rule=Host(`quizws.localhost`)
+      - traefik.http.routers.ws-router.service=ws-service
+      - traefik.http.services.ws-service.loadbalancer.server.port=8001
+    deploy:
+      mode: replicated
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    depends_on:
+      - postgres
+    env_file: .env
+    volumes:
+      - ./libshared:/home/node/app/libshared
+    ports:
+      - 8001
+
+volumes:
+  postgresdata:

@@ -1,0 +1,64 @@
+<%- include('partials/_htmlhead'); -%>
+
+<header>
+
+  <h1 class="join">Waiting for other players&hellip;</h1>
+
+  <h1 class="start">Starting quiz&hellip;</h1>
+
+  <h1 class="questionactive">Question <span id="qnum">1</span> of <%= game.questions_asked %></h1>
+
+  <h1 class="scoreboard gameover">Player scores&hellip;</h1>
+
+</header>
+
+<main>
+
+  <article class="join">
+
+    <p>Other players can join this quiz by loading <strong><%= domain %>/</strong> and entering the game code: <strong><%= slug %></strong></p>
+
+  </article>
+
+  <article class="questionactive">
+
+    <p id="question"></p>
+    <div id="answers"></div>
+
+  </article>
+
+  <article class="join start scoreboard gameover">
+
+    <h2 class="join start">Players</h2>
+
+    <table id="player"></table>
+
+  </article>
+
+  <button id="start" class="join">START QUIZ WITH <span id="pnum">0</span> PLAYERS</button>
+
+  <article class="gameover">
+
+    <h2>Game over</h2>
+
+    <p>Thank you for playing.</p>
+    <p>Please <a href="<%= domain %>/#new">START</a> or <a href="<%= domain %>/#join">JOIN</a> another game&hellip;</p>
+
+  </article>
+
+  <svg id="timer" viewBox="0 0 100 100">
+    <circle r="40" cx="50" cy="50" stroke-width="20" stroke-linecap="round"></circle>
+  </svg>
+
+</main>
+
+<script type="module">
+window.cfg = {
+  wsDomain: '<%= wsDomain %>',
+  gameId: <%= game.id %>,
+  playerName: '<%= playerName %>'
+};
+</script>
+<script type="module" src="/js/main.js"></script>
+
+<%- include('partials/_htmlfoot'); -%>

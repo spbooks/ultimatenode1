@@ -1,0 +1,16 @@
+{
+  "name": "event",
+  "version": "1.0.0",
+  "description": "Event demonstration",
+  "type": "module",
+  "main": "event.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "file",
+    "compress"
+  ],
+  "author": "Craig Buckler",
+  "license": "MIT"
+}

@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  pagehitmongo:
+    image: mongo:5
+    env_file: .env
+    container_name: pagehitmongo
+    volumes:
+      - data:/data/db
+    ports:
+      - "${MONGO_INITDB_PORT}:27017"
+
+volumes:
+  data:

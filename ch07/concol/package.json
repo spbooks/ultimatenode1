@@ -1,0 +1,31 @@
+{
+  "name": "concol",
+  "version": "1.0.1",
+  "description": "Output color messages to the console",
+  "type": "module",
+  "main": "index.js",
+  "bin": "index.js",
+  "files": [ "index.js" ],
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/craigbuckler/concol.git"
+  },
+  "keywords": [
+    "console",
+    "terminal",
+    "text",
+    "color",
+    "colour"
+  ],
+  "author": "Craig Buckler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/craigbuckler/concol/issues"
+  },
+  "homepage": "https://github.com/craigbuckler/concol#readme",
+  "dependencies": {
+    "chalk": "^5.0.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "Example Express.js app",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Craig Buckler",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

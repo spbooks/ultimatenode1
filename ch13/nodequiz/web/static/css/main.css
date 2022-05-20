@@ -1,0 +1,236 @@
+/* defaults */
+:root {
+  --font: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-size: clamp(1em, 2vw, 1.5em);
+  --color-back1: #dcffe6;
+  --color-back2: #fff;
+  --color-back3: #aacab3;
+  --color-fore1: #333;
+  --color-fore2: #888;
+  --color-link1: #003d10;
+  --color-wrong1: #9c0004;
+  --color-wrong2: #ff0006;
+  --color-right1: #00ba32;
+  --color-right2: #00ff45;
+  --color-right3: #005a18;
+}
+
+/* reset */
+*, *:before, *:after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* standard element styles */
+body, input, textarea, button, table {
+  font-family: var(--font);
+  font-size: var(--font-size);
+  font-weight: 400;
+}
+
+body {
+  color: var(--color-fore1);
+  background-color: var(--color-back1);
+}
+
+strong {
+  font-weight: 600;
+}
+
+header {
+  padding: 0.2em 1em 0.3em;
+  color: var(--color-back2);
+  background-color: var(--color-right1);
+}
+
+main {
+  padding: 1em;
+}
+
+main > :first-child {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 1.4em;
+  font-weight: 400;
+  margin-top: 1em;
+}
+
+p {
+  margin-top: 1em;
+}
+
+table {
+  width: auto;
+  table-layout: fixed;
+  margin: 1em auto;
+	font-variant-numeric: tabular-nums;
+	border-spacing: 0;
+	border-collapse: collapse;
+	empty-cells: show;
+}
+
+th, td {
+  text-align: right;
+  padding: 0.2em 0.5em;
+}
+
+a:link, a:visited {
+  color: var(--color-link1);
+}
+
+input[type] {
+  font-size: var(--font-size);
+  width: 8em;
+  font-weight: 600;
+  padding: 0.3em 0.3em 0.3em 1em;
+  background-color: var(--color-back2);
+  border: 3px solid var(--color-right1);
+  border-radius: 3px;
+  outline: 0 none;
+}
+
+input[type=number] {
+  width: 5em;
+  text-align: center;
+}
+
+input:invalid {
+  border-color: var(--color-wrong1)
+}
+
+button {
+  display: block;
+  font-weight: 600;
+  padding: 0.3em 1em;
+  margin: 1em auto 0 auto;
+  background-color: var(--color-back3);
+  border: 3px solid var(--color-fore1);
+  border-radius: 3px;
+  outline: 0 none;
+}
+
+button:hover, button:focus {
+  background-color: var(--color-right2);
+}
+
+.formgrid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 50% 50%;
+  grid-gap: 0.5em;
+  margin: 1em auto;
+}
+
+.formgrid label {
+  text-align: right;
+}
+
+.tabs > *:target ~ :last-child,
+.tabs > *  {
+  display: none;
+}
+
+.tabs > :last-child,
+.tabs > :target {
+  display: block;
+}
+
+/* show/hide elements based on current state */
+body .join, body .start, body .questionactive, body .scoreboard, body .gameover { display: none; }
+body.join .join,
+body.start .start,
+body.questionactive .questionactive,
+body.scoreboard .scoreboard,
+body.gameover .gameover {
+  display: block;
+}
+
+/* question style */
+#question {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/* answer button styles */
+#answers {
+  list-style-type: none;
+}
+
+#answers button {
+  width: 100%;
+  text-align: left;
+  background-position: 100% 50%;
+  background-repeat: no-repeat;
+  padding-right: 1.5em;
+}
+
+#answers button span {
+  color: var(--color-fore2);
+}
+
+#answers.answered button,
+#answers.answered button:hover,
+#answers.answered button:focus {
+  color: var(--color-fore2);
+  background-color: var(--color-back1);
+  border-color: var(--color-fore2);
+}
+
+#answers.answered button.answered {
+  color: var(--color-right3);
+  background-color: var(--color-back2);
+  border-color: var(--color-right3);
+}
+
+#answers.answered button.right {
+  color: var(--color-back2);
+  background-color: var(--color-right3);
+  border-color: var(--color-right1);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"/></svg>');
+}
+
+#answers.answered button.wrong {
+  color: var(--color-back2);
+  background-color: var(--color-wrong1);
+  border-color: var(--color-wrong2);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>');
+}
+
+/* timer styles */
+#timer {
+  --countdown: 5000ms;
+  display: none;
+  width: 100px;
+  height: 100px;
+  margin: 1em auto;
+  transform: rotate(-90deg);
+}
+
+#timer.countdown {
+  display: block;
+}
+
+#timer circle {
+  stroke: var(--color-wrong1);
+  fill: none;
+  stroke-dasharray: 250;
+  stroke-dashoffset: 0;
+}
+
+#timer.countdown circle {
+  animation: countdown var(--countdown) linear 1 forwards;
+}
+
+@keyframes countdown {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 249; }
+}
